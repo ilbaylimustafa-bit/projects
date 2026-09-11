@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safa Eczanesi | Şahinbey, Gaziantep</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Alpine.js for lightweight interactions -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444', // Kırmızı Ana Renk
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                        accent: {
+                            500: '#111827', // Koyu Gri/Siyah
+                            600: '#000000',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.95) 0%, rgba(153, 27, 27, 0.85) 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-800 bg-gray-50" x-data="{ mobileMenuOpen: false, scrolled: false }" @scroll.window="scrolled = (window.pageYOffset > 20)">
+
+    <header class="fixed w-full z-50 transition-all duration-300"
+            :class="{ 'bg-white shadow-md py-3': scrolled, 'bg-white/90 backdrop-blur-md py-5 border-b border-gray-100': !scrolled }">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="flex justify-between items-center">
+                
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-600 text-white flex items-center justify-center text-2xl shadow-lg transition-transform group-hover:scale-105 group-hover:rotate-3 duration-300">
+                        <i class="fa-solid fa-moon"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-2xl font-bold tracking-tight text-gray-900 leading-none">
+                            Safa <span class="text-brand-600">Eczanesi</span>
+                        </span>
+                        <span class="text-xs font-medium text-gray-500 mt-1 uppercase tracking-wider">Gaziantep / Şahinbey</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#hizmetler" class="font-medium text-gray-700 hover:text-brand-600 transition-colors">Hizmetlerimiz</a>
+                    <a href="#calisma-saatleri" class="font-medium text-gray-700 hover:text-brand-600 transition-colors">Çalışma Saatleri</a>
+                    <a href="#iletisim" class="font-medium text-gray-700 hover:text-brand-600 transition-colors">İletişim & Konum</a>
+                    
+                    <!-- Call Buttons -->
+                    <div class="flex items-center gap-2">
+                        <a href="tel:+903423364379" class="bg-brand-600 hover:bg-brand-700 text-white px-5 py-2.5 rounded-full font-medium transition-all shadow-md hover:shadow-lg flex items-center gap-2 transform hover:-translate-y-0.5" title="Sabit Hat">
+                            <i class="fa-solid fa-phone-volume animate-pulse"></i> (342) 336 43 79
+                        </a>
+                        <a href="tel:+905559607711" class="bg-brand-500 hover:bg-brand-600 text-white w-10 h-10 flex items-center justify-center rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5" title="Cep Telefonu: 0555 960 77 11">
+                            <i class="fa-solid fa-mobile-screen"></i>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Toggle -->
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden w-10 h-10 flex items-center justify-center bg-gray-100 text-gray-700 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors">
+                    <i class="fa-solid text-xl" :class="mobileMenuOpen ? 'fa-xmark' : 'fa-bars'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div x-show="mobileMenuOpen" 
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-4"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-150"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 -translate-y-4"
+             @click.away="mobileMenuOpen = false"
+             class="md:hidden absolute top-full left-0 w-full bg-white shadow-xl border-t border-gray-100 py-4 px-4 flex flex-col gap-2 z-50">
+            
+            <a href="#hizmetler" @click="mobileMenuOpen = false" class="text-gray-700 font-medium hover:text-brand-600 p-3 rounded-lg hover:bg-brand-50 flex items-center gap-3"><i class="fa-solid fa-pills w-5 text-center text-brand-500"></i> Hizmetlerimiz</a>
+            <a href="#calisma-saatleri" @click="mobileMenuOpen = false" class="text-gray-700 font-medium hover:text-brand-600 p-3 rounded-lg hover:bg-brand-50 flex items-center gap-3"><i class="fa-solid fa-clock w-5 text-center text-brand-500"></i> Çalışma Saatleri</a>
+            <a href="#iletisim" @click="mobileMenuOpen = false" class="text-gray-700 font-medium hover:text-brand-600 p-3 rounded-lg hover:bg-brand-50 flex items-center gap-3"><i class="fa-solid fa-location-dot w-5 text-center text-brand-500"></i> İletişim & Konum</a>
+            
+            <a href="tel:+903423364379" class="bg-brand-600 text-white p-3.5 rounded-lg font-medium text-center flex items-center justify-center gap-2 mt-4 shadow-md">
+                <i class="fa-solid fa-phone"></i> Sabit Hat: (342) 336 43 79
+            </a>
+            <a href="tel:+905559607711" class="bg-brand-500 text-white p-3.5 rounded-lg font-medium text-center flex items-center justify-center gap-2 mt-2 shadow-md">
+                <i class="fa-solid fa-mobile-screen"></i> Cep: 0555 960 77 11
+            </a>
+            <a href="https://maps.google.com/?cid=1014605807028017455" target="_blank" class="bg-gray-100 text-gray-800 p-3.5 rounded-lg font-medium text-center flex items-center justify-center gap-2 mt-2 hover:bg-gray-200 transition-colors">
+                <i class="fa-solid fa-map-location-dot"></i> Yol Tarifi Al
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-[85vh] flex items-center">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Pharmacy Background" class="w-full h-full object-cover" />
+                <div class="absolute inset-0 hero-gradient"></div>
+            </div>
+            
+            <div class="container mx-auto px-4 lg:px-8 relative z-10">
+                <div class="max-w-3xl text-white opacity-0 animate-fade-in-up">
+                            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 text-sm font-medium mb-6">
+                        <span class="w-2.5 h-2.5 rounded-full bg-white animate-pulse"></span>
+                        Sağlığınız İçin Hizmetinizdeyiz
+                    </div>
+                    <h1 class="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                        Safa Eczanesi<br>
+                        <span class="text-white font-light text-4xl lg:text-5xl">Gaziantep Şahinbey</span>
+                    </h1>
+                    <p class="text-xl text-gray-100 mb-10 leading-relaxed max-w-2xl font-light">
+                        Güler yüzlü hizmet anlayışımız, geniş ürün yelpazemiz ve uzman kadromuzla sağlığınız için yanı başınızdayız. İlaç, dermokozmetik ve takviye edici gıdalarda güvenilir adresiniz.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a href="tel:+903423364379" class="bg-white text-brand-700 hover:bg-brand-50 px-8 py-4 rounded-xl font-bold transition-all shadow-lg text-center flex items-center justify-center gap-3 text-lg">
+                            <i class="fa-solid fa-phone"></i> Bizi Arayın
+                        </a>
+                        <a href="#iletisim" class="bg-brand-700/50 hover:bg-brand-700/80 backdrop-blur-md border border-brand-400/30 text-white px-8 py-4 rounded-xl font-bold transition-all text-center flex items-center justify-center gap-3 text-lg">
+                            <i class="fa-solid fa-location-arrow"></i> Yol Tarifi
+                        </a>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center gap-4 text-sm font-medium bg-black/20 inline-block p-4 rounded-xl backdrop-blur-sm">
+                        <div class="flex text-yellow-400 text-lg">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <span class="text-white">Google'da 4.4 Yıldız Puanı</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Decorative wave -->
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none z-10">
+                <svg class="relative block w-full h-12 lg:h-20" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,122.92,199.19,114.47,243.6,108.8,284.94,84.4,321.39,56.44Z" class="fill-gray-50"></path>
+                </svg>
+            </div>
+        </section>
+
+        <section id="hizmetler" class="py-20 bg-gray-50 relative">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Neler Sunuyoruz?</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">Eczane Hizmetlerimiz</h2>
+                    <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Reçeteli İlaçlar</h3>
+                        <p class="text-gray-600 leading-relaxed">SGK, Bağ-Kur, Emekli Sandığı ve özel sigorta reçetelerinizin eksiksiz ve hızlı temini.</p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-leaf"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Dermokozmetik</h3>
+                        <p class="text-gray-600 leading-relaxed">Cilt yapınıza uygun, dünyaca ünlü markaların cilt bakım, güneş ve saç bakım ürünleri.</p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-capsules"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Vitamin & Takviye</h3>
+                        <p class="text-gray-600 leading-relaxed">Bağışıklık sisteminizi destekleyecek, güvenilir markaların vitamin ve besin takviyeleri.</p>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100 group">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-3xl mb-6 group-hover:bg-brand-600 group-hover:text-white transition-colors duration-300">
+                            <i class="fa-solid fa-baby"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">Anne & Bebek</h3>
+                        <p class="text-gray-600 leading-relaxed">Bebek mamaları, biberonlar, pişik kremleri ve anneler için gerekli tüm bakım ürünleri.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="calisma-saatleri" class="py-20 bg-white">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    
+                    <div class="w-full lg:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1576602976047-174e57a47881?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Pharmacy Interior" class="rounded-3xl shadow-2xl w-full object-cover h-[500px]">
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2 lg:pl-10">
+                        <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Bilgilendirme</span>
+                        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-6">Çalışma Saatlerimiz</h2>
+                        <p class="text-gray-600 text-lg mb-8 leading-relaxed">
+                            Size kesintisiz ve kaliteli sağlık hizmeti sunmak için haftanın 6 günü açığız. İlaç danışmanlığı ve sağlık ürünleri ihtiyaçlarınız için mesai saatleri içerisinde eczanemizi ziyaret edebilirsiniz.
+                        </p>
+
+                        <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 shadow-sm">
+                            <ul class="divide-y divide-gray-200">
+                                <li class="py-4 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-regular fa-calendar-check text-brand-600 w-5"></i>
+                                        <span class="font-medium text-gray-900">Pazartesi - Cuma</span>
+                                    </div>
+                                    <span class="font-bold text-gray-700 bg-white px-3 py-1 rounded-md shadow-sm">08:30 - 18:00</span>
+                                </li>
+                                <li class="py-4 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-regular fa-calendar-check text-brand-600 w-5"></i>
+                                        <span class="font-medium text-gray-900">Cumartesi</span>
+                                    </div>
+                                    <span class="font-bold text-gray-700 bg-white px-3 py-1 rounded-md shadow-sm">09:00 - 13:00</span>
+                                </li>
+                                <li class="py-4 flex justify-between items-center">
+                                    <div class="flex items-center gap-3">
+                                        <i class="fa-solid fa-calendar-xmark text-red-500 w-5"></i>
+                                        <span class="font-medium text-gray-900">Pazar</span>
+                                    </div>
+                                    <span class="font-bold text-red-500 bg-red-50 px-3 py-1 rounded-md">Kapalı</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iletisim" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Bize Ulaşın</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mt-2 mb-4">İletişim ve Konum Bilgileri</h2>
+                    <div class="w-20 h-1 bg-brand-500 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Contact Info Cards -->
+                    <div class="lg:col-span-1 flex flex-col gap-6">
+                        <!-- Address -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 rounded-full bg-brand-50 flex-shrink-0 flex items-center justify-center text-brand-600 text-xl">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Adresimiz</h4>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    60. Yıl, 78018. Sk. No:46,<br>
+                                    27070 Şahinbey / Gaziantep
+                                </p>
+                                <a href="https://maps.google.com/?cid=1014605807028017455" target="_blank" class="inline-block mt-3 text-sm font-semibold text-brand-600 hover:text-brand-700">Google Haritalar'da Aç &rarr;</a>
+                            </div>
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 rounded-full bg-brand-50 flex-shrink-0 flex items-center justify-center text-brand-600 text-xl">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Telefon Numaraları</h4>
+                                <p class="text-gray-600 text-sm mb-3">Bizi arayarak ilaç durumunu sorabilirsiniz.</p>
+                                <div class="flex flex-col gap-2">
+                                    <a href="tel:+903423364379" class="text-lg font-bold text-brand-600 hover:text-brand-800 transition-colors flex items-center gap-2">
+                                        <i class="fa-solid fa-phone-volume text-sm w-4"></i> +90 (342) 336 43 79
+                                    </a>
+                                    <a href="tel:+905559607711" class="text-lg font-bold text-brand-600 hover:text-brand-800 transition-colors flex items-center gap-2">
+                                        <i class="fa-solid fa-mobile-screen text-sm w-4"></i> +90 (555) 960 77 11
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rating -->
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-start gap-4 hover:shadow-md transition-shadow">
+                             <div class="w-12 h-12 rounded-full bg-yellow-50 flex-shrink-0 flex items-center justify-center text-yellow-500 text-xl">
+                                <i class="fa-brands fa-google"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-900 mb-1">Müşteri Memnuniyeti</h4>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="text-2xl font-bold text-gray-900">4.4</span>
+                                    <div class="flex text-yellow-400 text-sm">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star-half-stroke"></i>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 text-xs">Google Değerlendirmeleri</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Maps Embed -->
+                    <div class="lg:col-span-2 bg-white p-2 rounded-3xl shadow-md border border-gray-100 h-[400px] lg:h-auto overflow-hidden">
+                        <!-- Encoding the address for Google Maps Iframe -->
+                        <iframe 
+                            src="https://maps.google.com/maps?q=Safa%20Eczanesi%2060.%20Y%C4%B1l,%2078018.%20Sk.%20No:46,%2027070%20%C5%9Eahinbey/Gaziantep&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                            class="w-full h-full rounded-2xl" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white pt-16 pb-8 border-t-4 border-brand-500">
+        <div class="container mx-auto px-4 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <!-- Brand Info -->
+                <div class="md:col-span-1">
+                    <a href="#" class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-brand-600 text-white flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-moon"></i>
+                        </div>
+                        <span class="text-2xl font-bold tracking-tight text-white">
+                            Safa <span class="text-brand-400">Eczanesi</span>
+                        </span>
+                    </a>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Şahinbey, Gaziantep bölgesinde güvenilir sağlık danışmanınız. Reçeteli ilaçlar, OTC ürünleri, dermokozmetik ve daha fazlası için hizmetinizdeyiz.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-gray-100">Hızlı Bağlantılar</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#hizmetler" class="text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs"></i> Hizmetlerimiz</a></li>
+                        <li><a href="#calisma-saatleri" class="text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs"></i> Çalışma Saatleri</a></li>
+                        <li><a href="#iletisim" class="text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs"></i> İletişim Bilgileri</a></li>
+                        <li><a href="https://maps.google.com/?cid=1014605807028017455" target="_blank" class="text-gray-400 hover:text-brand-400 transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs"></i> Google Haritalar'da Bul</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-gray-100">İletişim</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-brand-400 mt-1"></i>
+                            <span class="text-gray-400 text-sm">60. Yıl, 78018. Sk. No:46, 27070 Şahinbey/Gaziantep</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-brand-400 mt-1"></i>
+                            <div class="flex flex-col gap-1">
+                                <a href="tel:+903423364379" class="text-gray-400 hover:text-white transition-colors text-sm">Sabit: +90 342 336 43 79</a>
+                                <a href="tel:+905559607711" class="text-gray-400 hover:text-white transition-colors text-sm">Cep: +90 555 960 77 11</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">
+                    &copy; <script>document.write(new Date().getFullYear())</script> Safa Eczanesi. Tüm hakları saklıdır.
+                </p>
+                <div class="text-gray-500 text-sm">
+                    Gaziantep, Şahinbey
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
